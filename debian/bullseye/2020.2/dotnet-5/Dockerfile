@@ -1,4 +1,4 @@
-FROM vlrpi/rpi-teamcity-agent:debian-bullseye-2020.1
+FROM vlrpi/rpi-teamcity-agent:debian-bullseye-2020.2
 LABEL maintainer="Vova Lantsov"
 LABEL contact_email="contact@vova-lantsov.dev"
 LABEL telegram="https://t.me/vova_lantsov"
