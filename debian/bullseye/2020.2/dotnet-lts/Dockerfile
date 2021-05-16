@@ -26,7 +26,7 @@ RUN apt-get update \
 
 # Install .NET Core 2.1 SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_2_1_VERSION/dotnet-sdk-$DOTNET_SDK_2_1_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='2c4a74d6b238ab316e0e60caff77eaeafe5de8fa44fc3b0d828cf81de97d99b065a6260f1e6209f4021be0bc1c9f082a9648c341d65cd36fe3dce1b6eb86ae96' \
+    && dotnet_sha512='32e72e26062444405f8d94918948ebd3a6eb4c4fa5d5c144fab35e23d2c44c9e4ab0d2f12e70c249b2972d5fef32bcbd2551f7920cd0fe778a38457368d477af' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
@@ -34,7 +34,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
 
 # Install .NET Core 3.1 SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_3_1_VERSION/dotnet-sdk-$DOTNET_SDK_3_1_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='4ae1c92bd4cdf0ea459591e87aea0e2f560df9d2c406e68dcf6667576ebf7761817683b565d42aeca74a6f03cdb8342d3fd1f9c81a4657a78043a5f765dc549c' \
+    && dotnet_sha512='edc011e5ee64fc76e8004aa73d439e7cea922ab00be6c70250c5f73cf6838b1935f5d3d3c9aa65f83bfd3923751bc1a6d92be3fba64a0a09a4acb4fd8d6db4c7' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz \
