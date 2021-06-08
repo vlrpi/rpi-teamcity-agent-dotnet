@@ -3,8 +3,8 @@ LABEL maintainer="Vova Lantsov"
 LABEL contact_email="contact@vova-lantsov.dev"
 LABEL telegram="https://t.me/vova_lantsov"
 
-ENV DOTNET_SDK_2_1_VERSION=2.1.814 \
-    DOTNET_SDK_3_1_VERSION=3.1.407 \
+ENV DOTNET_SDK_2_1_VERSION=2.1.816 \
+    DOTNET_SDK_3_1_VERSION=3.1.409 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)
