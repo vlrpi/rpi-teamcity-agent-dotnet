@@ -1,13 +1,10 @@
-FROM vlrpi/rpi-teamcity-agent:debian-bullseye-2020.2
+FROM vlrpi/rpi-teamcity-agent:debian-bullseye-2021.1
 LABEL maintainer="Vova Lantsov"
 LABEL contact_email="contact@vova-lantsov.dev"
 LABEL telegram="https://t.me/vova_lantsov"
 
-ENV DOTNET_SDK_2_1_VERSION=2.1.816 \
-    DOTNET_SDK_3_1_VERSION=3.1.409 \
-    DOTNET_SDK_5_VERSION=5.0.300 \
     # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
+ENV DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -15,35 +12,34 @@ ENV DOTNET_SDK_2_1_VERSION=2.1.816 \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        libc6 \
-        libgcc1 \
-        libgssapi-krb5-2 \
-        libicu67 \
-        libssl1.1 \
-        libstdc++6 \
-        zlib1g \
+    ca-certificates \
+    libc6 \
+    libgcc1 \
+    libgssapi-krb5-2 \
+    libicu67 \
+    libssl1.1 \
+    libstdc++6 \
+    zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
-# Install .NET Core 2.1 SDK
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_2_1_VERSION/dotnet-sdk-$DOTNET_SDK_2_1_VERSION-linux-arm64.tar.gz \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/2.1.816/dotnet-sdk-2.1.816-linux-arm64.tar.gz \
     && dotnet_sha512='32e72e26062444405f8d94918948ebd3a6eb4c4fa5d5c144fab35e23d2c44c9e4ab0d2f12e70c249b2972d5fef32bcbd2551f7920cd0fe778a38457368d477af' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz
 
-# Install .NET Core 3.1 SDK
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_3_1_VERSION/dotnet-sdk-$DOTNET_SDK_3_1_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='edc011e5ee64fc76e8004aa73d439e7cea922ab00be6c70250c5f73cf6838b1935f5d3d3c9aa65f83bfd3923751bc1a6d92be3fba64a0a09a4acb4fd8d6db4c7' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.410/dotnet-sdk-3.1.410-linux-arm64.tar.gz \
+    && dotnet_sha512='58400007d55b122becb229a45d0fa8676890e16e818e229a9b6f5684e6d9133a22e4cb144f3a1af351c01fe9cc70056d43ab8164dca2b841cbdfae96fd7b02db' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz
 
-# Install .NET 5 SDK
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_5_VERSION/dotnet-sdk-$DOTNET_SDK_5_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='654e625627b35d9b8e4e5967c76485d0ff91769f5bb5429c99e0554c601426de1b26a5c37d32ab4bc227a15409c134757d5422944cf52c945b351c5927a28393' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/5.0.301/dotnet-sdk-5.0.301-linux-arm64.tar.gz \
+    && dotnet_sha512='56e233b8f35abe80984bc8a60028f4f8dbc8543313a0711045ef13c693e11e706ee4809574518f57910ec2c93bed896da32760c8143a298556dc25478caca90f' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
