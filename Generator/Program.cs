@@ -27,16 +27,9 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    libc6 \
-    libgcc1 \
-    libgssapi-krb5-2 \
-    libicu-dev \
-    libssl1.1 \
-    libstdc++6 \
-    zlib1g \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates libc6 libgcc1 libgssapi-krb5-2 libstdc++6 zlib1g \
+    {packagesToInstall} \
     && rm -rf /var/lib/apt/lists/*
 
 {installCommands} \
@@ -90,12 +83,12 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                 new
                 {
                     system = "debian",
-                    info = new (string osVersion, string libicuVersion)[] {("buster", "63"),("bullseye", "67"),("stretch", "57")}
+                    info = new (string osVersion, string packagesToInstall)[] {("buster", "libicu63 libssl1.1"),("bullseye", "libicu67 libssl1.1"),("stretch", "libicu57 libssl1.1")}
                 },
                 new
                 {
                     system = "ubuntu",
-                    info = new (string osVersion, string libicuVersion)[] {("bionic", "60"),("focal", "66"),("xenial", "55")}
+                    info = new (string osVersion, string packagesToInstall)[] {("bionic", "libicu60 libssl1.1"),("focal", "libicu66 libssl1.1"),("xenial", "libicu55 libssl1.0.0")}
                 }
             };
 
@@ -105,7 +98,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                 foreach (var osInfo in supportedOsItem.info)
                 {
                     var osVersion = osInfo.osVersion;
-                    var libicuVersion = osInfo.libicuVersion;
+                    var packagesToInstall = osInfo.packagesToInstall;
                     foreach (var teamcityVersion in TeamcityVersions)
                     {
                         bool isLatest = teamcityVersion == TeamcityVersions[^1];
@@ -134,7 +127,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                                     "lts" => LtsVersions,
                                     "supported" => SupportedVersions,
                                     _ => new[] {dotnetVersion}
-                                }, libicuVersion);
+                                }, packagesToInstall);
                             using var dockerFile = File.CreateText(Path.Combine(subDir.FullName, "Dockerfile"));
                             dockerFile.Write(dockerFileContent);
                         }
@@ -144,7 +137,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
         }
 
         private static string GetDockerFile(string osName, string osVersion, string teamcityVersion,
-            string[] dotnetVersions, string libicuVersion)
+            string[] dotnetVersions, string packagesToInstall)
         {
             var installCommandsBuilder = new StringBuilder();
             installCommandsBuilder.AppendJoin("\n\n",
@@ -155,7 +148,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                 .Replace("{osVersion}", osVersion)
                 .Replace("{teamcityVersion}", teamcityVersion)
                 .Replace("{installCommands}", installCommandsBuilder.ToString())
-                .Replace("{libicuVersion}", libicuVersion)
+                .Replace("{packagesToInstall}", packagesToInstall)
                 .Trim();
         }
 
