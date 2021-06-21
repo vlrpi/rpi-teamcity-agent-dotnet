@@ -33,7 +33,7 @@ RUN apt-get update \
     libc6 \
     libgcc1 \
     libgssapi-krb5-2 \
-    libicu67 \
+    libicu{libicuVersion} \
     libssl1.1 \
     libstdc++6 \
     zlib1g \
@@ -90,20 +90,22 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                 new
                 {
                     system = "debian",
-                    versions = new[] {"buster","bullseye","stretch"}
+                    info = new (string osVersion, string libicuVersion)[] {("buster", "63"),("bullseye", "67"),("stretch", "57")}
                 },
                 new
                 {
                     system = "ubuntu",
-                    versions = new[] {"bionic","focal","xenial"}
+                    info = new (string osVersion, string libicuVersion)[] {("bionic", "60"),("focal", "66"),("xenial", "55")}
                 }
             };
 
             foreach (var supportedOsItem in supportedOs)
             {
                 string osName = supportedOsItem.system;
-                foreach (var osVersion in supportedOsItem.versions)
+                foreach (var osInfo in supportedOsItem.info)
                 {
+                    var osVersion = osInfo.osVersion;
+                    var libicuVersion = osInfo.libicuVersion;
                     foreach (var teamcityVersion in TeamcityVersions)
                     {
                         bool isLatest = teamcityVersion == TeamcityVersions[^1];
@@ -132,7 +134,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                                     "lts" => LtsVersions,
                                     "supported" => SupportedVersions,
                                     _ => new[] {dotnetVersion}
-                                });
+                                }, libicuVersion);
                             using var dockerFile = File.CreateText(Path.Combine(subDir.FullName, "Dockerfile"));
                             dockerFile.Write(dockerFileContent);
                         }
@@ -142,7 +144,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
         }
 
         private static string GetDockerFile(string osName, string osVersion, string teamcityVersion,
-            string[] dotnetVersions)
+            string[] dotnetVersions, string libicuVersion)
         {
             var installCommandsBuilder = new StringBuilder();
             installCommandsBuilder.AppendJoin("\n\n",
@@ -153,6 +155,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                 .Replace("{osVersion}", osVersion)
                 .Replace("{teamcityVersion}", teamcityVersion)
                 .Replace("{installCommands}", installCommandsBuilder.ToString())
+                .Replace("{libicuVersion}", libicuVersion)
                 .Trim();
         }
 
