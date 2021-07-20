@@ -22,15 +22,15 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.410/dotnet-sdk-3.1.410-linux-arm64.tar.gz \
-    && dotnet_sha512='58400007d55b122becb229a45d0fa8676890e16e818e229a9b6f5684e6d9133a22e4cb144f3a1af351c01fe9cc70056d43ab8164dca2b841cbdfae96fd7b02db' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.411/dotnet-sdk-3.1.411-linux-arm64.tar.gz \
+    && dotnet_sha512='c9b03b858e6063fc200a103930fb5a3b03ae35b89b884bb461bad36ce34f14fa84c4e98edc7082bcf5b132fbd31d8d58192e62ae055e757d064ed98e4ec5c600' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/5.0.301/dotnet-sdk-5.0.301-linux-arm64.tar.gz \
-    && dotnet_sha512='56e233b8f35abe80984bc8a60028f4f8dbc8543313a0711045ef13c693e11e706ee4809574518f57910ec2c93bed896da32760c8143a298556dc25478caca90f' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/5.0.302/dotnet-sdk-5.0.302-linux-arm64.tar.gz \
+    && dotnet_sha512='56bbe76febccdda15405d9c7037e73fdd3a7e39d7057d76b89899ebb32bf6f180dad0ecc9274f765439dee511629a87598d8c4d61e3c8cb93c703ed0430228ae' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
