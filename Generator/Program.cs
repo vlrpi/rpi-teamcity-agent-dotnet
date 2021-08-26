@@ -91,6 +91,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                     info = new (string osVersion, string packagesToInstall)[] {("bionic", "libicu60 libssl1.1"),("focal", "libicu66 libssl1.1"),("xenial", "libicu55 libssl1.0.0")}
                 }
             };
+            var now = DateTime.UtcNow;
 
             foreach (var supportedOsItem in supportedOs)
             {
@@ -119,7 +120,8 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
                                 tagsFile.WriteLine($"tc-latest-dotnet-{dotnetVersion}");
                             if (isLatestForYear)
                                 tagsFile.WriteLine($"tc-{separatedTeamcityVersion[0]}-dotnet-{dotnetVersion}");
-                            tagsFile.Write($"tc-{teamcityVersion}-dotnet-{dotnetVersion}");
+                            tagsFile.WriteLine($"tc-{teamcityVersion}-dotnet-{dotnetVersion}");
+                            tagsFile.Write($"tc-{teamcityVersion}-dotnet-{dotnetVersion}-{now:yyyyMMdd}-{now:hhmmss}");
 
                             string dockerFileContent = GetDockerFile(osName, osVersion, teamcityVersion,
                                 dotnetVersion switch
