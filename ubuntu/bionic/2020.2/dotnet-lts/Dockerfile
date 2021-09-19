@@ -15,22 +15,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu60 libssl1.1 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/2.1.818/dotnet-sdk-2.1.818-linux-arm64.tar.gz \
-    && dotnet_sha512='4a8dfb282ba5c8b286e3b09c100a738a43df41fef371d0f6e7b3341aafb8ff00436658d1139175ec0a545e49a15aedda0efc6a4b97b7324c3cef5cdab8ff0451' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/6.0.100-rc.1.21458.32/dotnet-sdk-6.0.100-rc.1.21458.32-linux-arm64.tar.gz \
+    && dotnet_sha512='b27bf9be0198f7fda3eee514c86758665b144e6fc7d2f3e43223e65f80dfc85a43bbc9f61a5e8dbda2e10ec193fafd2c208e64e2e98358f0c80ef6e349bd7c33' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/6.0.100-preview.7.21379.14/dotnet-sdk-6.0.100-preview.7.21379.14-linux-arm64.tar.gz \
-    && dotnet_sha512='7ee5fbb4e700bcc8a840ec950a764c6ec4cbb8e23394d75a3b4b547e1178f0ae16b0edc262b0fbec5bb9dde3e870225928b147b440f1c27ffada60c03b903dde' \
-    && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
-    && rm dotnet.tar.gz
-
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.412/dotnet-sdk-3.1.412-linux-arm64.tar.gz \
-    && dotnet_sha512='bfc6f58cb0b87b0a2cf42d91494b914ab0997c91289599cce1704ee33fac9773e5b37b48d40c2d0fc53709c7f94cc37c26533ef7d0eb90f6db05680b2b603da0' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.413/dotnet-sdk-3.1.413-linux-arm64.tar.gz \
+    && dotnet_sha512='39f198f07577faf81f09ca621fb749d5aac38fc05e7e6bd6226009679abc7d001454068430ddb34b320901955f42de3951e2707e01bce825b5216df2bc0c8eca' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
