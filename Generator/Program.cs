@@ -143,7 +143,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
         {
             var installCommandsBuilder = new StringBuilder();
             installCommandsBuilder.AppendJoin("\n\n",
-                SdkHashes.Where(it => dotnetVersions.Contains(it.Key)).Select(it => GetInstallationCommand(it.Value.sdkVersion, it.Value.sdkHash)));
+                SdkHashes.Where(it => dotnetVersions.Contains(it.Key))
+                    .OrderBy(it => it.Key)
+                    .Select(it => GetInstallationCommand(it.Value.sdkVersion, it.Value.sdkHash)));
 
             return DockerFileTemplate
                 .Replace("{osName}", osName)
