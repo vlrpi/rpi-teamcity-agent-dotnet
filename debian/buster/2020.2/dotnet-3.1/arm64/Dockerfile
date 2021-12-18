@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu63 libssl1.1 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.414/dotnet-sdk-3.1.414-linux-arm64.tar.gz \
-    && dotnet_sha512='42b526d4ae914a0f1b04cbefe70b2c052eae9791dce54431ee5aff2e1bba5dbd08f49505a835319dab0551e9e9788f239e53ac154760cc8c0a85512cbe568408' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.416/dotnet-sdk-3.1.416-linux-arm64.tar.gz \
+    && dotnet_sha512='0065c7afb129b1a0e0c11703309f3b45cf9a3c0ea156247f7cc61555f21c37054f215eb77add509dad77b1d388a4e6c585f8a8016109f31c5b64184b25e2c407' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \

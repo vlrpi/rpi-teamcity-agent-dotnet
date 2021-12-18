@@ -17,14 +17,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu55 libssl1.0.0 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.414/dotnet-sdk-3.1.414-linux-arm.tar.gz \
-    && dotnet_sha512='08c93b7948151fbe3db9fa105ed02bfefb510e437aa9ad418c60ba96b41a7e25f891a1d4308f51595a9aa385d4e9ca05cab8a803e75728fb70aa9bae30f37b67' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.1.416/dotnet-sdk-3.1.416-linux-arm.tar.gz \
+    && dotnet_sha512='33a6d64f466839cc30adef87909a2ff98ecdf6bb763b82a7951314ee8eded7dc210297f914d4aa0b9c0b101aa0c33da97cb15ff64c5f83f08b212b885d662e90' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
     && rm dotnet.tar.gz
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/6.0.100-rc.2.21505.57/dotnet-sdk-6.0.100-rc.2.21505.57-linux-arm.tar.gz \
-    && dotnet_sha512='2396998b8f21527f979b84460aee8621ca5fa275e4a1ee83b11fe9f12b42479931e56787d7dc82640d72470df185cb02d0bbc5e0e3e920bb6abb2d270051b188' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/6.0.101/dotnet-sdk-6.0.101-linux-arm.tar.gz \
+    && dotnet_sha512='f9e212dc4cccbe665d9aac23da6bdddce4957ae4e4d407cf3f1d6da7e79784ebd408c3a59b3ecc6ceaa930b37cf01a4a91c6b38517970d49227e96e50658cc46' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
