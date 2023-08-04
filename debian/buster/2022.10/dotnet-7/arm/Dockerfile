@@ -12,13 +12,15 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
 # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip
 
+RUN [ "cross-build-start" ]
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates libc6 libgcc1 libgssapi-krb5-2 libstdc++6 zlib1g \
     libicu63 libssl1.1 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/7.0.102/dotnet-sdk-7.0.102-linux-arm.tar.gz \
-    && dotnet_sha512='67db0338992e39b5ae83756d7f89f1e9195b624c24ba08124ee25cc5e3ce4f09af6d5aa45cd301585cd41f9b71e9de1a82d6afa4a16149d1098377e6e44886f8' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/7.0.306/dotnet-sdk-7.0.306-linux-arm.tar.gz \
+    && dotnet_sha512='09bc8cf29f7080f4aee117c3ecbfb0f6c3d9a0b83280e5436429f61b3dfb5878472f9c68282d1d1a850ffcee15b51c342bfb192be76d89276e9886aef5ec5e17' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -zxf dotnet.tar.gz \
@@ -26,3 +28,5 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
+
+RUN [ "cross-build-end" ]
