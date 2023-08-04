@@ -15,7 +15,7 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
 RUN [ "cross-build-start" ]
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates libc6 libgcc1 libgssapi-krb5-2 libstdc++6 zlib1g \
+    libc6 libgcc1 libgssapi-krb5-2 libstdc++6 \
     libicu60 libssl1.1 \
     && rm -rf /var/lib/apt/lists/*
 
